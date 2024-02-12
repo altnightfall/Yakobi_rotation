@@ -34,7 +34,7 @@ class App:
             for j in range(rows_and_cols):
                 _arr.append(int(dpg.get_value(f"Cell: {i} {j}")))
             _matrix.append(_arr)
-        return np.array(_matrix)
+        return np.array(_matrix, dtype=np.float64)
 
     def yakobi(self) -> None:
         """Yakobi rotation usage."""
