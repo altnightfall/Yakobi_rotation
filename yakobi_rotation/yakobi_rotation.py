@@ -23,7 +23,12 @@ def yakobi_rotation(matrix: np.array, eps: float) -> Tuple[Optional[list[np.arra
         return None, f"Matrix must be symmetric"
 
     v = np.eye(shapes[0])
-    s = np.sum(a**2)
+
+    s = 0
+    for _p in range(shapes[0]):
+        for _q in range(shapes[0]):
+            if _p != _q:
+                s += a[_p][_q] ** 2
 
     while True:
         el = np.array([])
@@ -41,6 +46,7 @@ def yakobi_rotation(matrix: np.array, eps: float) -> Tuple[Optional[list[np.arra
                 break
 
         c = (a[q][q] - a[p][p]) / (2 * a[p][q])
+        s -= (pow(a[p][q], 2) + pow(a[q][p], 2))
 
         if c >= 0:
             tg_phi = 1 / (c + np.sqrt(c ** 2 + 1))
@@ -71,6 +77,5 @@ def yakobi_rotation(matrix: np.array, eps: float) -> Tuple[Optional[list[np.arra
         a = np.array(_a)
         v = np.array(_v)
 
-        s -= pow(a[p][q], 2)
         if s < eps:
             return [a, v], "S < eps!"
